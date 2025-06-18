@@ -18,10 +18,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.app.testembeded.ui.theme.TestEmbededTheme
-import io.flutter.embedding.android.FlutterActivity
-import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.embedding.engine.FlutterEngineCache
-import io.flutter.embedding.engine.dart.DartExecutor
 import java.util.Date
 
 class MainActivity : ComponentActivity() {
@@ -58,19 +54,20 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         )
         Button(onClick = {
             Toast.makeText(context, "Android start Flutter Main Screen", Toast.LENGTH_SHORT).show()
-            /*val flutterIntent = MyFlutterActivity
+            val flutterIntent = MyFlutterActivity
                 .withCachedEngine("flutter_engine_main")
-                .build(context)*/
-
-            var flutterIntent = MyFlutterActivity
-                .withNewEngine()
-                .initialRoute("/")
                 .build(context)
 
+            /*var flutterIntent = MyFlutterActivity
+                .withNewEngine()
+                .initialRoute("/")
+                .build(context)*/
+
             // Add data via intent extras
-            flutterIntent.putExtra("user_id", "12345")
-            flutterIntent.putExtra("user_name", "John Doe ${Date()}")
-            flutterIntent.putExtra("complex_data", "{\"key\":\"value\"}")
+            flutterIntent.putExtra("userId", "12345")
+            flutterIntent.putExtra("userName", "John Doe ${Date()}")
+            flutterIntent.putExtra("complexData", "{\"key\":\"value\"}")
+            flutterIntent.putExtra("routeName", "/")
 
             context.startActivity(flutterIntent)
 
@@ -82,10 +79,10 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                 Toast.makeText(context, "Android start Flutter Second Screen", Toast.LENGTH_SHORT)
                     .show()
                 val flutterIntent = MyFlutterActivity
-                    .withCachedEngine("flutter_engine_second")
+                    .withCachedEngine("flutter_engine_main")
                     .build(context)
 
-                flutterIntent.putExtra("data", "second")
+                flutterIntent.putExtra("routeName", "/second")
                 context.startActivity(flutterIntent)
             }) {
             Text(text = "Click Me to start Flutter Second Screen")

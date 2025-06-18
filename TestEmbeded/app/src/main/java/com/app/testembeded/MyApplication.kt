@@ -10,7 +10,6 @@ class MyApplication : Application() {
         super.onCreate()
         // Instantiate a FlutterEngine.
         initFlutterEngine("flutter_engine_main", "/")
-        initFlutterEngine("flutter_engine_second", "/second")
 
     }
 

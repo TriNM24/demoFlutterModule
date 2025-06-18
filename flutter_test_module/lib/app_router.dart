@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,7 +13,14 @@ class AppRouter {
       GoRoute(
         path: '/',
         name: 'main',
-        builder: (context, state) => const MainScreen(),
+        builder: (context, state) {
+          Map<String, dynamic> arguments = state.extra as Map<String, dynamic>;
+          return MainScreen(
+            userId: arguments['userId'],
+            userName: arguments['userName'],
+            complexData: json.decode(arguments['complexData']),
+          );
+        },
       ),
       GoRoute(
         path: '/second',

@@ -111,11 +111,11 @@
         {
           "name": "path_provider_android_debug-1.0-javadoc.jar",
           "url": "path_provider_android_debug-1.0-javadoc.jar",
-          "size": 294220,
-          "sha512": "8a7af37dc9be96e54d1eeedc5ee4e7d121d20efecb64d410ba3f0a125b2e73bc254de7978043c4754153a21d333da0d582be8eec3fc1e5a721c9d6d551a1d80e",
-          "sha256": "ad763c9732a7af76f58285c8dde6331771a06de98d9a11bb0c2a6d137ffba2ee",
-          "sha1": "6b0f8d4befd02dc16304e2fec6ba97236d1d3f22",
-          "md5": "337acd4cf6785a9265c9c4b0c89cb6fa"
+          "size": 294213,
+          "sha512": "a2f899778f0dd05b1cbe4e9ab2d7b34d1e283ebf6c1c50d1d944b9aaa322edbcee99e599ce70e5d7c9fc07fd6446b5b7d72374c7e264b37c1ed789e6aabcaf64",
+          "sha256": "bc00acdb135876ed8359fd6f92307ffc2f2531d7c80bf1cc72158637016cd853",
+          "sha1": "a6ba9feb95714a0d6d0f8637c40dced2a8458d30",
+          "md5": "f53c9299569bf88bf654746fc341293a"
         }
       ]
     }

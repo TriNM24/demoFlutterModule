@@ -1,11 +1,18 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_test_module/main.dart';
 import 'package:go_router/go_router.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  String userId = '';
+  String userName = '';
+  Map<String, dynamic> complexData = {};
+  MainScreen({
+    super.key,
+    required this.userId,
+    required this.userName,
+    required this.complexData,
+  });
 
   @override
   State<MainScreen> createState() {
@@ -14,39 +21,13 @@ class MainScreen extends StatefulWidget {
 }
 
 class _main_screenState extends State<MainScreen> {
-  static const platform = MethodChannel('com.app.testembeded/data');
-  String userId = '';
-  String userName = '';
-  Map<String, dynamic> complexData = {};
-
   String message = '';
 
   @override
   void initState() {
     super.initState();
     print("MainScreen initState");
-    platform.setMethodCallHandler(_handleMethodCalls);
-  }
-
-  Future<dynamic> _handleMethodCalls(MethodCall call) async {
-    switch (call.method) {
-      case 'onActivityResumed':
-        // This will be called every time the activity becomes visible
-        final Map<String, dynamic> arguments = Map<String, dynamic>.from(
-          call.arguments,
-        );
-        setState(() {
-          userId = arguments['user_id'] ?? '';
-          userName = arguments['user_name'] ?? '';
-          // Parse complex data from JSON if needed
-          if (arguments['complex_data'] != null) {
-            complexData = json.decode(arguments['complex_data']);
-          }
-        });
-        return true;
-      default:
-        return null;
-    }
+    //platform.setMethodCallHandler(_handleMethodCalls);
   }
 
   // Send data to Android
@@ -59,7 +40,7 @@ class _main_screenState extends State<MainScreen> {
         'user_data': {'id': 123, 'name': 'Updated Name'},
       };
 
-      await platform.invokeMethod('sendDataToAndroid', resultData);
+      await MyApp.platform.invokeMethod('sendDataToAndroid', resultData);
     } on PlatformException catch (e) {
       print("Failed to send data: ${e.message}");
     }
@@ -77,9 +58,9 @@ class _main_screenState extends State<MainScreen> {
       body: Column(
         children: [
           Text("Data from Android"),
-          Text('User ID: $userId'),
-          Text('User Name: $userName'),
-          Text('Complex Data: $complexData'),
+          Text('User ID: ${widget.userId}'),
+          Text('User Name: ${widget.userName}'),
+          Text('Complex Data: ${widget.complexData}'),
           ElevatedButton(
             onPressed: () {
               context.push('/second');

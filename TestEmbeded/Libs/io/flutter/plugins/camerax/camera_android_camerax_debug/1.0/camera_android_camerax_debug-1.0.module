@@ -153,11 +153,11 @@
         {
           "name": "camera_android_camerax_debug-1.0-javadoc.jar",
           "url": "camera_android_camerax_debug-1.0-javadoc.jar",
-          "size": 1098310,
-          "sha512": "5630ade0254d0da4a0ca58b53724bdd8f95d4f3745030a07d2c6536259198cfef7c72af0dd1520b114f459ade367392f9b9dcc6b215d05bc55136dbde5faa286",
-          "sha256": "61964f936e5325c8a3507e89ba70b30042736952ab80498b7dc4e8fd3c48bfdc",
-          "sha1": "c9fdfe70822d768721c64561fe18ab4b38e45d91",
-          "md5": "197b13604cd63c60698ff1f93ba6ec90"
+          "size": 1098357,
+          "sha512": "a17f09e3450ce3ee06070886d94498960662cfc3c1b38925e6a8602f7a5079b4ab554e92464dea76f587a0380a849c1f36904df7f3682396be10b2f1e6ce6664",
+          "sha256": "801de72eadc86b552852cdb93d6279357fc5865ba6d5d8a53f3fdc38d1ae896c",
+          "sha1": "a7179aaa25493d314ad338717df0d46a11fbc5ac",
+          "md5": "cd1d709296e3bd789f8452457b139fe4"
         }
       ]
     }
