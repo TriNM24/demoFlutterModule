@@ -14,22 +14,11 @@ class AppRouter {
         path: '/',
         name: 'main',
         builder: (context, state) {
-          if (state.extra != null) {
-            Map<String, dynamic> arguments =
-                state.extra as Map<String, dynamic>;
-            return MainScreen(
-              userId: arguments['userId'],
-              userName: arguments['userName'],
-              complexData:
-                  arguments['complexData'] != null
-                      ? json.decode(arguments['complexData'])
-                      : <String, dynamic>{},
-            );
-          }
+          Map<String, dynamic> arguments = state.extra as Map<String, dynamic>;
           return MainScreen(
-            userId: '',
-            userName: '',
-            complexData: <String, dynamic>{},
+            userId: arguments['userId'],
+            userName: arguments['userName'],
+            complexData: json.decode(arguments['complexData']),
           );
         },
       ),
