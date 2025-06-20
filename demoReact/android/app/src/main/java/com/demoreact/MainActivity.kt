@@ -28,6 +28,15 @@ class MainActivity : AppCompatActivity() {
     fun initViews(){
         binding.btnStartReactNative.setOnClickListener {
             val intent = Intent(this, ReactMainActivity::class.java)
+            // Add data as extras
+            intent.putExtra("userId", "12345")
+            intent.putExtra("userName", "John Doe")
+            intent.putExtra("message", Date().toString())
+            // For complex data you can use JSON
+            intent.putExtra("complexData", "{\"key\":\"value\",\"nested\":{\"data\":true}}")
+            // Add image data
+            val imageList = arrayListOf("https://dummyimage.com/600x400/ffffff/000000.png", "https://dummyimage.com/600x400/000000/ffffff.png")
+            intent.putStringArrayListExtra("images", imageList)
             startActivity(intent)
         }
         binding.btnStartFlutterMain.setOnClickListener {
