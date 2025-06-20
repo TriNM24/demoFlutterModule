@@ -19,7 +19,7 @@ class ReactMainActivity : ReactActivity() {
    * which allows you to enable New Architecture with a single boolean flags [fabricEnabled]
    */
     override fun createReactActivityDelegate(): ReactActivityDelegate {
-      return object : DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled) {
+      return object : DefaultReactActivityDelegate(this, mainComponentName, false) {
         override fun getLaunchOptions(): Bundle {
           intent?.extras?.let { extras ->
             return extras
