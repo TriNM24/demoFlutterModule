@@ -7,7 +7,21 @@
 
 //import { NewAppScreen } from '@react-native/new-app-screen';
 import React, { useEffect, useState } from 'react';
-import { Button, StatusBar, StyleSheet, Text, useColorScheme, View, Image, ScrollView, Alert } from 'react-native';
+import { 
+  Button, 
+  StatusBar, 
+  StyleSheet, 
+  Text, 
+  useColorScheme, 
+  View, 
+  Image, 
+  ScrollView, 
+  Alert, 
+  NativeModules,
+  NativeEventEmitter
+} from 'react-native';
+
+const { NativeBridge } = NativeModules;
 
 // Define the props interface for the component
 interface AppProps {
@@ -21,6 +35,8 @@ function App(props: AppProps) {
   const isDarkMode = useColorScheme() === 'dark';
   const [nativeData, setNativeData] = useState<any>({});
   const [loading, setLoading] = useState(true);
+  const [eventData, setEventData] = useState<any>(null);
+  const [deviceInfo, setDeviceInfo] = useState<any>(null);
 
   useEffect(() => {
     // Get initial properties from native Android
@@ -47,7 +63,18 @@ function App(props: AppProps) {
       }
     };
 
+    // Setup event listener cho Native Events
+    const eventEmitter = new NativeEventEmitter(NativeBridge);
+    const subscription = eventEmitter.addListener('NativeEvent', (event) => {
+      setEventData(event);
+    });
+
     getInitialProperties();
+
+    // Cleanup subscription on unmount
+    return () => {
+      subscription.remove();
+    };
   }, [props]);
 
   const handleButtonPress = () => {
@@ -60,6 +87,21 @@ function App(props: AppProps) {
             `.trim();
 
     Alert.alert('Native Data Info', dataInfo);
+  };
+
+  // Native Bridge Functions
+  const showNativeToast = () => {
+    NativeBridge.showToast('Hello từ React Native!', 'LONG');
+  };
+
+  const getDeviceInfoFromNative = async () => {
+    try {
+      const info = await NativeBridge.getDeviceInfo();
+      setDeviceInfo(info);
+      Alert.alert('Thông tin thiết bị', JSON.stringify(info, null, 2));
+    } catch (error) {
+      Alert.alert('Lỗi', `Không thể lấy thông tin thiết bị: ${error}`);
+    }
   };
 
   if (loading) {
@@ -89,7 +131,32 @@ function App(props: AppProps) {
         </View>
       )}
 
-      <Button title="Show Native Data Info" onPress={handleButtonPress} />
+      {/* Display event data from native */}
+      {eventData && (
+        <View style={styles.dataContainer}>
+          <Text style={styles.sectionTitle}>Event Data from Native:</Text>
+          <Text style={styles.dataText}>{JSON.stringify(eventData, null, 2)}</Text>
+        </View>
+      )}
+
+      <View style={styles.buttonContainer}>
+        <Button title="Show Native Data Info" onPress={handleButtonPress} />
+        <Button title="Show Native Toast" onPress={showNativeToast} />
+      
+      </View>
+      <View style={{ marginTop: 10, marginHorizontal: 10}}>
+        <Button title="Show Native Dialog" onPress={getDeviceInfoFromNative} />
+      </View>
+      {deviceInfo && (
+        <View style={[styles.dataContainer, { marginTop:10}]}>
+          <Text style={styles.deviceInfoTitle}>📱 Thông tin thiết bị:</Text>
+          <Text style={styles.deviceInfoText}>Brand: {deviceInfo.brand}</Text>
+          <Text style={styles.deviceInfoText}>Model: {deviceInfo.model}</Text>
+          <Text style={styles.deviceInfoText}>Android: {deviceInfo.version}</Text>
+          <Text style={styles.deviceInfoText}>SDK: {deviceInfo.sdkVersion}</Text>
+        </View>
+      )}
+
     </View>
   );
 }
@@ -169,6 +236,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 8,
     fontSize: 14,
+    color: '#333',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 20,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
     color: '#333',
   },
 });
