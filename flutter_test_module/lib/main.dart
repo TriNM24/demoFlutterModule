@@ -6,7 +6,9 @@ import 'app_router.dart';
 void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
-  static const platform = MethodChannel('com.app.testembeded/data');
+  static const platform = MethodChannel(
+    'vn.com.module.vib.agent.vib_agent_flutter_module.host/data',
+  );
   const MyApp({super.key});
 
   @override
